@@ -7,9 +7,9 @@
 <p align="center">面向 Transmission 4.x 的现代化响应式网页界面</p>
 
 <p align="center">
-  <a href="https://github.com/cainiao524/tranemission-next-vibemod/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/cainiao524/tranemission-next-vibemod/build.yml?branch=main&label=%E6%9E%84%E5%BB%BA" alt="构建状态" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/cainiao524/tranemission-next-vibemod" alt="许可证" /></a>
-  <a href="https://hub.docker.com/r/lowsabishi/tranemission-next-vibemod"><img src="https://img.shields.io/docker/pulls/lowsabishi/tranemission-next-vibemod?label=Docker%20Hub" alt="Docker Hub 镜像拉取量" /></a>
+  <a href="https://github.com/cainiao524/transmission-next-vibemod/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/cainiao524/transmission-next-vibemod/build.yml?branch=main&label=%E6%9E%84%E5%BB%BA" alt="构建状态" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/cainiao524/transmission-next-vibemod" alt="许可证" /></a>
+  <a href="https://hub.docker.com/r/lowsabishi/transmission-next-vibemod"><img src="https://img.shields.io/docker/pulls/lowsabishi/transmission-next-vibemod?label=Docker%20Hub" alt="Docker Hub 镜像拉取量" /></a>
   <img src="https://img.shields.io/badge/Transmission-4.x-d76b2b" alt="Transmission 兼容版本" />
 </p>
 
@@ -31,7 +31,7 @@ Transmission VibeMod 使用 React、Vite、Tailwind CSS 与 shadcn/ui 构建，�
 
 ## 安装方式一：Docker Hub 镜像（推荐）
 
-镜像地址：[lowsabishi/tranemission-next-vibemod](https://hub.docker.com/r/lowsabishi/tranemission-next-vibemod)，支持 `linux/amd64` 与 `linux/arm64`。`latest` 跟随最新稳定镜像，也可以使用固定版本标签 `vBAKA9`。
+镜像地址：[lowsabishi/transmission-next-vibemod](https://hub.docker.com/r/lowsabishi/transmission-next-vibemod)，支持 `linux/amd64` 与 `linux/arm64`。`latest` 跟随最新稳定镜像，也可以使用固定版本标签 `vBAKA9`。
 
 #### 写法 A（推荐）：`host.docker.internal` 自动指向宿主机
 
@@ -44,9 +44,9 @@ Transmission VibeMod 使用 React、Vite、Tailwind CSS 与 shadcn/ui 构建，�
 
 ```yaml
 services:
-  tranemission-next-vibemod:
-    image: lowsabishi/tranemission-next-vibemod:latest
-    container_name: tranemission-next-vibemod
+  transmission-next-vibemod:
+    image: lowsabishi/transmission-next-vibemod:latest
+    container_name: transmission-next-vibemod
     extra_hosts:
       - "host.docker.internal:host-gateway"   # Linux / NAS 需要；Docker Desktop 可删除
     environment:
@@ -70,9 +70,9 @@ docker compose up -d
 
 ```yaml
 services:
-  tranemission-next-vibemod:
-    image: lowsabishi/tranemission-next-vibemod:latest
-    container_name: tranemission-next-vibemod
+  transmission-next-vibemod:
+    image: lowsabishi/transmission-next-vibemod:latest
+    container_name: transmission-next-vibemod
     environment:
       TRANSMISSION_URL: http://192.168.1.10:9091
     ports:
@@ -92,7 +92,7 @@ docker compose up -d
 如果两个服务位于同一个 Compose 网络，可以把地址写成 `http://transmission:9091`。需要锁定当前版本时，将镜像改为：
 
 ```yaml
-image: lowsabishi/tranemission-next-vibemod:vBAKA9
+image: lowsabishi/transmission-next-vibemod:vBAKA9
 ```
 
 ## 安装方式二：发行版＋Nginx 反向代理
@@ -112,16 +112,16 @@ image: lowsabishi/tranemission-next-vibemod:vBAKA9
 NAS 示例目录：
 
 ```bash
-mkdir -p /vol1/1000/Docker/Compose/tranemission-next-vibemod/webui
-cd /vol1/1000/Docker/Compose/tranemission-next-vibemod
+mkdir -p /vol1/1000/Docker/Compose/transmission-next-vibemod/webui
+cd /vol1/1000/Docker/Compose/transmission-next-vibemod
 ```
 
-普通 Linux 服务器也可以使用其他目录，例如 `/opt/tranemission-next-vibemod`。
+普通 Linux 服务器也可以使用其他目录，例如 `/opt/transmission-next-vibemod`。
 
 最终目录结构如下：
 
 ```text
-tranemission-next-vibemod/
+transmission-next-vibemod/
 ├─ docker-compose.yml
 ├─ nginx.conf
 └─ webui/
@@ -134,7 +134,7 @@ tranemission-next-vibemod/
 安装 `curl` 和 `unzip` 后执行：
 
 ```bash
-curl -L https://github.com/cainiao524/tranemission-next-vibemod/releases/latest/download/tranemission-next-vibemod.zip -o webui.zip
+curl -L https://github.com/cainiao524/transmission-next-vibemod/releases/latest/download/transmission-next-vibemod.zip -o webui.zip
 unzip -o webui.zip -d webui
 ```
 
@@ -146,7 +146,7 @@ unzip -o webui.zip -d webui
 services:
   webui:
     image: nginx:alpine
-    container_name: tranemission-next-vibemod
+    container_name: transmission-next-vibemod
     ports:
       - "${WEBUI_PORT:-9095}:80"
     volumes:
@@ -261,10 +261,10 @@ curl -i -X POST \
 先备份旧网页目录，再解压最新发行版：
 
 ```bash
-cd /vol1/1000/Docker/Compose/tranemission-next-vibemod
+cd /vol1/1000/Docker/Compose/transmission-next-vibemod
 mv webui "webui-backup-$(date +%Y%m%d-%H%M%S)"
 mkdir webui
-curl -L https://github.com/cainiao524/tranemission-next-vibemod/releases/latest/download/tranemission-next-vibemod.zip -o webui.zip
+curl -L https://github.com/cainiao524/transmission-next-vibemod/releases/latest/download/transmission-next-vibemod.zip -o webui.zip
 unzip -o webui.zip -d webui
 docker compose up -d --force-recreate
 ```
@@ -305,8 +305,8 @@ try_files $uri $uri/ /index.html;
 需要 Node.js 22 和 pnpm 10：
 
 ```bash
-git clone https://github.com/cainiao524/tranemission-next-vibemod.git
-cd tranemission-next-vibemod
+git clone https://github.com/cainiao524/transmission-next-vibemod.git
+cd transmission-next-vibemod
 pnpm install --frozen-lockfile
 pnpm test
 pnpm build

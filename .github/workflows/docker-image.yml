@@ -32,5 +32,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/cainiao524/tranemission-next-vibemod-test:test
-            ghcr.io/cainiao524/tranemission-next-vibemod-test:sha-${{ github.sha }}
+            ghcr.io/cainiao524/transmission-next-vibemod-test:test
+            ghcr.io/cainiao524/transmission-next-vibemod-test:sha-${{ github.sha }}
