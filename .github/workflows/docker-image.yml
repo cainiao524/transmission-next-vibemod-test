@@ -31,6 +31,8 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            VERSION_SHA=${{ github.sha }}
           tags: |
             ghcr.io/cainiao524/transmission-next-vibemod-test:test
             ghcr.io/cainiao524/transmission-next-vibemod-test:sha-${{ github.sha }}
